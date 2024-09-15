@@ -1,0 +1,10 @@
+In Python try-except-else structure:
+
+    try:
+        <---- code ---->
+    except:
+        <---- error ---->
+    else:
+        <---- no errors ---->
+    finally:
+        <---- in any case ---->
