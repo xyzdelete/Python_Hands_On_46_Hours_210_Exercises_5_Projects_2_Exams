@@ -1,0 +1,18 @@
+The image named, 
+The_Great_Wave_of_Kanagawa_Maidens_Tower.jpg 
+is a combination of two images:
+
+1- The Great Wave off Kanagawa.jpg
+Katsushika Hokusai - 1829
+https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa
+
+2- Maidens Tower.png
+The beautiful Maiden's Tower in Bosphorus, Istanbul, Turkey.
+
+In this project;
+The drawing style of The Great Wave off Kanagawa was transfered onto Princess Tower,
+by using Neural Style Transfer, a special use case of Deep Learning 
+by Musa Arda.
+
+Neural Style Transfer:
+https://www.tensorflow.org/tutorials/generative/style_transfer
