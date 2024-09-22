@@ -1,5 +1,6 @@
 from widget.window.Window import Window
 from widget.left_frame.LeftFrame import LeftFrame
+from widget.button.Button import Button
 
 if __name__ == "__main__":
     pass
