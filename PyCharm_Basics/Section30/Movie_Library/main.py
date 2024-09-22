@@ -1,4 +1,5 @@
 from widget.window.Window import Window
+from widget.left_frame.LeftFrame import LeftFrame
 
 if __name__ == "__main__":
     pass
@@ -6,6 +7,8 @@ if __name__ == "__main__":
     root = Window("Movie Library - Tkinter")
 
     # LEFT FRAME
+    left_frame = LeftFrame(root.window, "leftFrame")
+
 
     # RIGHT FRAME
 
