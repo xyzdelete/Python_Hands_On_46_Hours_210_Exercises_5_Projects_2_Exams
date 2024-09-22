@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import csv
 from tkinter.font import names
+from turtledemo.nim import COLOR
 
 from PIL import Image, ImageTk
 from PIL.ImageOps import expand
@@ -13,7 +14,12 @@ class MovieList:
     This class is the frame for movie list.
     """
 
-    # column list
+    # Pagination variables
+    page_number = 1
+    movies_per_page = 10
+    total_num_pages = 0
+
+    # Column list
     columns = ["imdbID", "Id", "Title", "Year", "imdbRating", "imdbVotes"]
 
     def __init__(
@@ -73,9 +79,13 @@ class MovieList:
             for movie in movie_dict:
                 self.movies.append(movie)
 
+        # Assign total number of pages
+        MovieList.total_num_pages = len(self.movies) // MovieList.movies_per_page + 1
+
     def create_page(self):
         self.add_header_row()
         self.create_table()
+        self.create_combo_box()
 
     def add_header_row(self):
         for j, column in enumerate(MovieList.columns):
@@ -109,7 +119,7 @@ class MovieList:
                         row=1,
                         column=j,
                         sticky="we",
-                        padx=(0, 10)
+                        padx=(0, 10),
                     )
                 else:
                     lbl.grid(
@@ -121,25 +131,30 @@ class MovieList:
 
     def create_table(self):
         for i, movie in enumerate(self.movies):
-            for j, key in enumerate(MovieList.columns):
-                name = "table_row_" + str(i) + str(j) + "_" + movie["imdbID"]
-                if j == 0:
-                    # render image
-                    self.render_image(
-                        movie,
-                        i,
-                        j,
-                        name
-                    )
-                else:
-                    # Print label
-                    self.write_label(
-                        movie,
-                        i,
-                        j,
-                        key,
-                        name
-                    )
+            # if i = 2
+            # 10 <= i <= 20
+            if (MovieList.page_number - 1) * MovieList.movies_per_page <= i < MovieList.page_number * MovieList.movies_per_page:
+                for j, key in enumerate(MovieList.columns):
+                    name = "table_row_" + str(i) + str(j) + "_" + movie["imdbID"]
+                    if j == 0:
+                        # render image
+                        self.render_image(
+                            movie,
+                            i,
+                            j,
+                            name
+                        )
+                    else:
+                        # Print label
+                        self.write_label(
+                            movie,
+                            i,
+                            j,
+                            key,
+                            name
+                        )
+
+            self.i = i + 3
 
     def render_image(
         self,
@@ -200,18 +215,59 @@ class MovieList:
         elif key == "imdbVotes":
             lbl.configure(width=12)
 
+        self.fill_bg(lbl, i)
+
         # Place in a grid
         if key == "imdbVotes":
             lbl.grid(
                 row=i+2,
                 column=j,
                 sticky="we",
-                padx=(0, 10)
+                padx=(0, 10),
+                pady=1
             )
         else:
             lbl.grid(
                 row=i+2,
                 column=j,
                 sticky="we",
-                padx=(0, 1)
+                padx=(0, 1),
+                pady=1
             )
+
+    def fill_bg(
+        self,
+        widget,
+        i
+    ):
+        if i % 2 == 1:
+            widget.configure(bg=COLORS.LIST_ODD_LINE)
+        else:
+            widget.configure(bg=COLORS.LIST_EVEN_LINE)
+
+    def create_combo_box_select_event(
+        self,
+        event
+    ):
+        pass
+
+    def create_combo_box(self):
+        values = list(range(1, MovieList.total_num_pages))
+        pages = ttk.Combobox(
+            self.frame,
+            values=values,
+            width=4
+        )
+        pages.current(MovieList.page_number - 1)
+
+        # Bind select event
+        pages.bind(
+            "<<ComboboxSelected>>",
+            self.create_combo_box_select_event
+        )
+
+        pages.grid(
+            row=self.i,
+            column = 2,
+            pady=(15, 0)
+        )
