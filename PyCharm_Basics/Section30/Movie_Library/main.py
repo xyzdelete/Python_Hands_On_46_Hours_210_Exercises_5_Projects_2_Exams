@@ -1,5 +1,3 @@
-from unittest.mock import right
-
 from widget.window.Window import Window
 from widget.left_frame.LeftFrame import LeftFrame
 from widget.right_frame.RightFrame import RightFrame

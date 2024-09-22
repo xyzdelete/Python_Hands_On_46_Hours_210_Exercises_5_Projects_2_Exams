@@ -1,5 +1,6 @@
 import tkinter as tk
 from data.colors import COLORS
+from page.home.Home import Home
 
 class RightFrame:
     """
@@ -41,7 +42,10 @@ class RightFrame:
     ):
         if page_name == "home":
             # Add home page
-            pass
+            Home(
+                self.frame,
+                RightFrame.bg_color
+            )
         elif page_name == "movieList":
             # Add movie list page
             pass
