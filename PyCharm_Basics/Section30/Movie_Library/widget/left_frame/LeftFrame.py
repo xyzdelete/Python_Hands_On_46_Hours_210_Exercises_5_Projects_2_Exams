@@ -4,7 +4,7 @@ from turtledemo.nim import COLOR
 from data.colors import COLORS
 from data.menus import MENU
 from widget.button.Button import Button
-
+from widget.right_frame.RightFrame import RightFrame
 
 class LeftFrame:
     """
@@ -35,6 +35,17 @@ class LeftFrame:
             event
     ):
         self.manage_button_colors(event)
+        page_name = str(event.widget).split(".")[2]
+        print("Page {0} is clicked.".format(page_name))
+        rightFrame = self.master.children["rightFrame"]
+
+        RightFrame.destroy_children(rightFrame)
+
+        # Add new page -> page_name
+        RightFrame.frame_content(
+            rightFrame,
+            page_name
+        )
 
     def add_menus(self):
         # add menus in loop

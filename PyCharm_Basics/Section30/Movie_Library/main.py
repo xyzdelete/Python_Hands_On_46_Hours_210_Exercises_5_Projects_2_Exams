@@ -11,7 +11,7 @@ if __name__ == "__main__":
     left_frame = LeftFrame(root.window, "leftFrame")
 
     # RIGHT FRAME
-    right_frame = RightFrame(root.window, "rightFrmae")
+    right_frame = RightFrame(root.window, "rightFrame")
 
     # Start Root Window -> mainloop()
     root.start_method()

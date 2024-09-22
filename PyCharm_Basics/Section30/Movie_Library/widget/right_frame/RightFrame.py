@@ -1,6 +1,7 @@
 import tkinter as tk
 from data.colors import COLORS
 from page.home.Home import Home
+from page.movie_list.MovieList import MovieList
 
 class RightFrame:
     """
@@ -40,16 +41,29 @@ class RightFrame:
             self,
             page_name="home"
     ):
-        if page_name == "home":
-            # Add home page
-            Home(
-                self.frame,
-                RightFrame.bg_color
-            )
-        elif page_name == "movieList":
-            # Add movie list page
-            pass
-        elif page_name == "movieDetail":
-            # Add movie detail page
-            pass
+        try:
+            incoming_frame = self.frame
+        except:
+            incoming_frame = self
+        finally:
+            if page_name == "home":
+                # Add home page
+                Home(
+                    incoming_frame,
+                    RightFrame.bg_color
+                )
+            elif page_name == "movieList":
+                # Add movie list page
+                MovieList(
+                    incoming_frame,
+                    RightFrame.bg_color
+                )
+            elif page_name == "movieDetail":
+                # Add movie detail page
+                pass
 
+    # Static method -> Class Method
+    def destroy_children(frame):
+        # Destroy the children
+        for child in frame.winfo_children():
+            child.destroy()
