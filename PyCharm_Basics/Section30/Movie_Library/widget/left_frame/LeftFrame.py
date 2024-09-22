@@ -75,6 +75,9 @@ class LeftFrame:
                     side=tk.TOP
                 )
 
+                if menu_key == "home":
+                    self.selected_button_color(button.button)
+
     def manage_button_colors(
             self,
             event
@@ -92,3 +95,12 @@ class LeftFrame:
                     bg=COLORS.BLACK,
                     fg=COLORS.ORANGE
                 )
+
+    def selected_button_color(
+        self,
+        button
+    ):
+        button.configure(
+            bg=COLORS.ORANGE,
+            fg=COLORS.WHITE
+        )

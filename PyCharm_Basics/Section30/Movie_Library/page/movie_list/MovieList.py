@@ -57,7 +57,7 @@ class MovieList:
         lbl = tk.Label(
             self.frame,
             text=title,
-            height=3,
+            height=2,
             bg=COLORS.BLACK,
             fg=COLORS.WHITE,
             font=("Iosevka Custom", 12, "bold")
@@ -196,7 +196,7 @@ class MovieList:
             self.frame,
             name=name,
             text=str(movie[key]),
-            height=4,
+            height=3,
             bg=COLORS.WHITE,
             fg=COLORS.BLACK,
             font=("Iosevka Custom", 10, "bold"),
@@ -207,7 +207,10 @@ class MovieList:
         if key == "Id":
             lbl.configure(width=4)
         elif key == "Title":
-            lbl.configure(width=54)
+            lbl.configure(
+                width=54,
+                anchor="w"
+            )
         elif key == "Year":
             lbl.configure(width=8)
         elif key == "imdbRating":
@@ -224,7 +227,6 @@ class MovieList:
                 column=j,
                 sticky="we",
                 padx=(0, 10),
-                pady=1
             )
         else:
             lbl.grid(
@@ -232,7 +234,6 @@ class MovieList:
                 column=j,
                 sticky="we",
                 padx=(0, 1),
-                pady=1
             )
 
     def fill_bg(
@@ -249,7 +250,9 @@ class MovieList:
         self,
         event
     ):
-        pass
+        MovieList.page_number = int(event.widget.get())
+        self.clear_table(event)
+        self.create_table()
 
     def create_combo_box(self):
         values = list(range(1, MovieList.total_num_pages))
@@ -271,3 +274,14 @@ class MovieList:
             column = 2,
             pady=(15, 0)
         )
+
+    def clear_table(
+        self,
+        event
+    ):
+        master = event.widget.master
+        # Loop over the children
+        master_children_copy = master.children.copy()
+        for child in master_children_copy:
+            if "table_row_" in child:
+                master.children[child].destroy()
