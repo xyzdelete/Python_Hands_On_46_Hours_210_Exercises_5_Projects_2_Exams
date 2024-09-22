@@ -2,6 +2,7 @@ import tkinter as tk
 from data.colors import COLORS
 from page.home.Home import Home
 from page.movie_list.MovieList import MovieList
+from page.movie_detail.MovieDetail import MovieDetail
 
 class RightFrame:
     """
@@ -60,7 +61,10 @@ class RightFrame:
                 )
             elif page_name == "movieDetail":
                 # Add movie detail page
-                pass
+                MovieDetail(
+                    incoming_frame,
+                    RightFrame.bg_color
+                )
 
     # Static method -> Class Method
     def destroy_children(frame):
