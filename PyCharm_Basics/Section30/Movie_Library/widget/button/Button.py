@@ -15,6 +15,7 @@ class Button:
             bg,
             width,
             height,
+            handle_click,
             padx=0,
             pady=0,
             side=tk.TOP
@@ -33,6 +34,7 @@ class Button:
         self.pady = pady
         self.side = side
         self.add_button()
+        self.bind_event(handle_click)
 
     def add_button(self):
         self.button.configure(
@@ -44,3 +46,13 @@ class Button:
             side = self.side
         )
 
+    # Event binding to button
+    def bind_event(
+            self,
+            handle_click
+    ):
+        # In tkinter -> .bind() -> left mouse click -> <Button-1>
+        self.button.bind(
+            "<Button-1>",
+            handle_click
+        )
