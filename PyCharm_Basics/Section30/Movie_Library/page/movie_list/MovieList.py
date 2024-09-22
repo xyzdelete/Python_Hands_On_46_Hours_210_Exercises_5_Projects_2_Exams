@@ -1,13 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 import csv
-from tkinter.font import names
-from turtledemo.nim import COLOR
 
 from PIL import Image, ImageTk
-from PIL.ImageOps import expand
-
 from data.colors import COLORS
+from page.movie_detail.MovieDetail import MovieDetail
 
 class MovieList:
     """
@@ -203,6 +200,9 @@ class MovieList:
             cursor="hand2"
         )
 
+        # Bind the left click event
+        lbl.bind("<Button-1>", self.movie_click)
+
         # Configuration width
         if key == "Id":
             lbl.configure(width=4)
@@ -285,3 +285,50 @@ class MovieList:
         for child in master_children_copy:
             if "table_row_" in child:
                 master.children[child].destroy()
+
+    def movie_click(
+        self,
+        event
+    ):
+        imdbID = str(event.widget).split("_")[3]
+
+        # Modify the right frame
+        self.modify_right_frame(event, imdbID)
+
+        self.modify_left_frame(event)
+
+    def modify_right_frame(
+        self,
+        event,
+        imdbID
+    ):
+        rightFrame = event.widget.master
+        for child in rightFrame.winfo_children():
+            child.destroy()
+
+        MovieDetail(
+            self.frame,
+            COLORS.ORANGE,
+            imdbID=imdbID,
+            movies=self.movies
+        )
+
+    def modify_left_frame(
+        self,
+        event
+    ):
+        root = event.widget.master.master.master
+
+        for child in root.winfo_children():
+            if str(child) == ".leftFrame":
+                for ch in child.winfo_children():
+                    if str(ch) == ".leftFrame.movieDetail":
+                        ch.configure(
+                            bg=COLORS.ORANGE,
+                            fg=COLORS.WHITE
+                        )
+                    else:
+                        ch.configure(
+                            bg=COLORS.BLACK,
+                            fg=COLORS.ORANGE
+                        )
