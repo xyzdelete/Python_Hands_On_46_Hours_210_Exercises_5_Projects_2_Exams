@@ -36,6 +36,8 @@ class MovieList:
 
     def add_frame(self):
         self.add_page_title("Movie List")
+        self.read_csv()
+        self.create_page()
         self.frame.pack(
             side=self.side,
             fill=tk.BOTH,
@@ -64,3 +66,54 @@ class MovieList:
             sticky="we"
         )
 
+    def read_csv(self):
+        movie_path = "data/imdb_top_250.csv"
+        with open(movie_path, "r") as file:
+            movie_dict = csv.DictReader(file, delimiter=";")
+            for movie in movie_dict:
+                self.movies.append(movie)
+
+    def create_page(self):
+        self.add_header_row()
+
+    def add_header_row(self):
+        for j, column in enumerate(MovieList.columns):
+            if column != "imdbID":
+                lbl = tk.Label(
+                    self.frame,
+                    text=str(column),
+                    width=54,
+                    height=2,
+                    bg=COLORS.BLACK,
+                    fg=COLORS.WHITE,
+                    font=("Iosevka Custom", 10, "bold")
+                )
+
+                # Configuration width
+                if column == "Id":
+                    lbl.configure(
+                        text="#",
+                        width=4
+                    )
+                elif column == "Year":
+                    lbl.configure(width=8)
+                elif column == "imdbRating":
+                    lbl.configure(text="Rating", width=8)
+                elif column == "imdbVotes":
+                    lbl.configure(text="# of Ratings", width=12)
+
+                # Place in a grid
+                if column == "imdbVotes":
+                    lbl.grid(
+                        row=1,
+                        column=j,
+                        sticky="we",
+                        padx=(0, 10)
+                    )
+                else:
+                    lbl.grid(
+                        row=1,
+                        column=j,
+                        sticky="we",
+                        padx=(0, 1)
+                    )
