@@ -75,6 +75,7 @@ class MovieList:
 
     def create_page(self):
         self.add_header_row()
+        self.create_table()
 
     def add_header_row(self):
         for j, column in enumerate(MovieList.columns):
@@ -117,3 +118,100 @@ class MovieList:
                         sticky="we",
                         padx=(0, 1)
                     )
+
+    def create_table(self):
+        for i, movie in enumerate(self.movies):
+            for j, key in enumerate(MovieList.columns):
+                name = "table_row_" + str(i) + str(j) + "_" + movie["imdbID"]
+                if j == 0:
+                    # render image
+                    self.render_image(
+                        movie,
+                        i,
+                        j,
+                        name
+                    )
+                else:
+                    # Print label
+                    self.write_label(
+                        movie,
+                        i,
+                        j,
+                        key,
+                        name
+                    )
+
+    def render_image(
+        self,
+        movie,
+        i,
+        j,
+        name
+    ):
+        try:
+            # Load the image
+            load = Image.open("images/posters_small/" + movie["imdbID"] + ".jpg")
+        except:
+            load = Image.open("images/posters_small/no_image.jpg")
+        finally:
+            render = ImageTk.PhotoImage(load)
+            lbl_img = tk.Label(
+                self.frame,
+                name=name,
+                image=render,
+                bg=COLORS.ORANGE
+            )
+            lbl_img.image = render
+            lbl_img.grid(
+                row=i+2,
+                column=j,
+                padx=(7, 0),
+                sticky="we"
+            )
+
+    def write_label(
+        self,
+        movie,
+        i,
+        j,
+        key,
+        name
+    ):
+        lbl = tk.Label(
+            self.frame,
+            name=name,
+            text=str(movie[key]),
+            height=4,
+            bg=COLORS.WHITE,
+            fg=COLORS.BLACK,
+            font=("Iosevka Custom", 10, "bold"),
+            cursor="hand2"
+        )
+
+        # Configuration width
+        if key == "Id":
+            lbl.configure(width=4)
+        elif key == "Title":
+            lbl.configure(width=54)
+        elif key == "Year":
+            lbl.configure(width=8)
+        elif key == "imdbRating":
+            lbl.configure(width=8)
+        elif key == "imdbVotes":
+            lbl.configure(width=12)
+
+        # Place in a grid
+        if key == "imdbVotes":
+            lbl.grid(
+                row=i+2,
+                column=j,
+                sticky="we",
+                padx=(0, 10)
+            )
+        else:
+            lbl.grid(
+                row=i+2,
+                column=j,
+                sticky="we",
+                padx=(0, 1)
+            )
