@@ -1,6 +1,8 @@
+from unittest.mock import right
+
 from widget.window.Window import Window
 from widget.left_frame.LeftFrame import LeftFrame
-from widget.button.Button import Button
+from widget.right_frame.RightFrame import RightFrame
 
 if __name__ == "__main__":
     pass
@@ -10,8 +12,8 @@ if __name__ == "__main__":
     # LEFT FRAME
     left_frame = LeftFrame(root.window, "leftFrame")
 
-
     # RIGHT FRAME
+    right_frame = RightFrame(root.window, "rightFrmae")
 
     # Start Root Window -> mainloop()
     root.start_method()
